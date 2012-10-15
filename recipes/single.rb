@@ -1,3 +1,4 @@
+include_recipe "mongodb-10gen::default"
 
 mongonode = node['mongodb']
 
