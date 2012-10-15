@@ -1,6 +1,8 @@
 Description
 ===========
 
+[![Build Status](https://secure.travis-ci.org/higanworks-cookbooks/mongodb-10gen.png)](http://travis-ci.org/higanworks-cookbooks/mongodb-10gen)
+
 Add apt repository and install mongodb-10gen.
 
 ### Tested on
