@@ -28,7 +28,7 @@ template File.join("/etc/init", "#{mongonode['nodename']}.conf") do
   mode 00644
 end
 
-template File.join("/etc/logrotate.d", "#{mongonode['nodename']}") do
+template File.join("/etc/logrotate.d", {mongonode['nodename']) do
   source "logrotate_mongodb.erb"
   owner "root"
   group "root"
@@ -45,9 +45,9 @@ end
 
 
 service mongonode['nodename'] do
-  case node[:platform]
+  case platform
   when "ubuntu"
-    if node[:platform_version].to_f >= 9.10
+    if platform_version.to_f >= 9.10
       provider Chef::Provider::Service::Upstart
     end
   end
@@ -55,13 +55,12 @@ service mongonode['nodename'] do
 end
 
 
-if data_bag("mongodb_repsets").include?(mongonode['replSet_name']) then
-  template File.join("#{node['mongodb']['misc_dir']}", "repconf-#{mongonode['replSet_name']}.json" ) do
-    source "replica_config.json.erb"
-    owner "mongodb"
-    group "mongodb"
-    variables({
-      :rep_config => data_bag_item("mongodb_repsets", mongonode['replSet_name'])['config']
-    })
-  end    
-end
+template File.join(node['mongodb']['misc_dir'], "repconf-#{mongonode['replSet_name']}.json" ) do
+  source "replica_config.json.erb"
+  owner "mongodb"
+  group "mongodb"
+  variables({
+    :rep_config => data_bag_item("mongodb_repsets", mongonode['replSet_name'])['config']
+  })
+  only_if data_bag("mongodb_repsets").include?(mongonode['replSet_name'])
+end    

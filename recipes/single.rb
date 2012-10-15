@@ -22,7 +22,7 @@ template File.join("/etc/init", "#{mongonode['nodename']}.conf") do
   mode 00644
 end
 
-template File.join("/etc/logrotate.d", "#{mongonode['nodename']}") do
+template File.join("/etc/logrotate.d", mongonode['nodename']) do
   source "logrotate_mongodb.erb"
   owner "root"
   group "root"
@@ -39,9 +39,9 @@ end
 
 
 service mongonode['nodename'] do
-  case node[:platform]
+  case platform
   when "ubuntu"
-    if node[:platform_version].to_f >= 9.10
+    if platform_version.to_f >= 9.10
       provider Chef::Provider::Service::Upstart
     end
   end
