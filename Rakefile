@@ -7,7 +7,7 @@ task :foodcritic do
     prepare_foodcritic_sandbox(sandbox)
 
     puts "foodcritic --epic-fail any #{File.dirname(sandbox)}"
-    sh "foodcritic --epic-fail any #{File.dirname(sandbox)}"
+    sh "bundle exec foodcritic --epic-fail any #{File.dirname(sandbox)}"
   else
     puts "WARN: foodcritic run is skipped as Ruby #{RUBY_VERSION} is < 1.9.2."
   end
