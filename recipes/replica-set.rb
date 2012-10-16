@@ -45,9 +45,9 @@ end
 
 
 service mongonode['nodename'] do
-  case platform
+  case node['platform']
   when "ubuntu"
-    if platform_version.to_f >= 9.10
+    if node['platform_version'].to_f >= 9.10
       provider Chef::Provider::Service::Upstart
     end
   end
