@@ -10,6 +10,7 @@ port = <%= node['mongodb']['port'] %>
 cpu = true
 rest = <%= node['mongodb']['enable_rest'] %>
 jsonp = <%= node['mongodb']['enable_jsonp'] %>
+shardsvr = <%= node['mongodb']['enable_shardsvr'] %>
 pidfilepath=/var/run/<%= node['mongodb']['nodename'] %>.pid
 oplogSize=5120
 nojournal = <%= node['mongodb']['enable_nojournal'] %> 

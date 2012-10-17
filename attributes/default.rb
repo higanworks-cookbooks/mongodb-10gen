@@ -1,8 +1,9 @@
 default['mongodb']['nodename'] = "mongodb-single"
 default['mongodb']['port'] = 27017
 default['mongodb']['enable_rest'] = true
-default['mongodb']['enable_jsonp'] = true
+default['mongodb']['enable_jsonp'] = false
 default['mongodb']['enable_nojournal'] = false
+default['mongodb']['enable_shardsvr'] = false
 default['mongodb']['enable_directoryperdb'] = true
 
 default['mongodb']['base_dir'] = '/data/mongodb'
