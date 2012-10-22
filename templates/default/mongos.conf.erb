@@ -1,0 +1,12 @@
+# mongo_router.conf
+# maintenance: sawanoboriyu
+
+configdb=<%= @configdb %>
+port = <%= @port %>
+
+#where to log
+logpath=<%= @log_dir %>/<%= @nodename %>.log
+logappend=true
+
+pidfilepath=/var/run/<%= @nodename %>.pid
+

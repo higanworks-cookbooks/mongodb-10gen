@@ -1,4 +1,4 @@
-<%= node['mongodb']['log_dir'] %>/<%= node['mongodb']['nodename'] %>.log
+<%= @log_dir %>/<%= @nodename %>.log
 {
         rotate 4
         weekly
@@ -8,7 +8,7 @@
         sharedscripts
         postrotate
         ##  2.0.3 or later, don't use USR1.
-        #   kill -USR1 `cat /var/run/<%= node['mongodb']['nodename'] %>.pid` >/dev/null 2>&1 || true
+        #   kill -USR1 `cat /var/run/<%= @nodename %>.pid` >/dev/null 2>&1 || true
         endscript
 }
 

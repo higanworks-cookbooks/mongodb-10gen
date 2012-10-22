@@ -10,6 +10,7 @@ port = <%= node['mongodb']['port'] %>
 cpu = true
 replSet = <%= node['mongodb']['replSet_name'] %>
 shardsvr = <%= node['mongodb']['enable_shardsvr'] %>
+configsvr = <%= node['mongodb']['enable_configsvr'] %>
 rest = <%= node['mongodb']['enable_rest'] %>
 jsonp = <%= node['mongodb']['enable_jsonp'] %>
 pidfilepath=/var/run/<%= node['mongodb']['nodename'] %>.pid

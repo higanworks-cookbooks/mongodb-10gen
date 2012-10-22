@@ -1,6 +1,7 @@
-include_recipe "mongodb-10gen::default"
+include_recipe "mongodb-10gen::branch20"
 
-
+node.set['mongodb']['node_type'] = "configsvr"
+node.load_attribute_by_short_filename("default","mongodb-10gen")
 
 directory File.join(node['mongodb']['data_dir'], node['mongodb']['nodename']) do
   owner "mongodb"
@@ -50,6 +51,7 @@ template File.join(node['mongodb']['etc_dir'], "#{node['mongodb']['nodename']}.c
               :enable_rest => node['mongodb']['enable_jsonp'],
              :enable_jsonp => node['mongodb']['enable_jsonp'],
           :enable_shardsvr => node['mongodb']['enable_shardsvr'],
+         :enable_configsvr => node['mongodb']['enable_configsvr'],
          :enable_nojournal => node['mongodb']['enable_nojournal'],
     :enable_directoryperdb => node['mongodb']['enable_directoryperdb']
   )

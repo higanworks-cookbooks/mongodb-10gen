@@ -1,6 +1,7 @@
-include_recipe "mongodb-10gen::default"
+include_recipe "mongodb-10gen::branch20"
 
-
+node.set['mongodb']['node_type'] = "router"
+node.load_attribute_by_short_filename("default","mongodb-10gen")
 
 directory File.join(node['mongodb']['data_dir'], node['mongodb']['nodename']) do
   owner "mongodb"
@@ -15,7 +16,7 @@ directory File.join(node['mongodb']['log_dir']) do
 end
 
 template File.join("/etc/init", "#{node['mongodb']['nodename']}.conf") do
-  source "init_mongodb.erb"
+  source "init_mongos.erb"
   owner "root"
   group "root"
   mode 00644
@@ -38,20 +39,16 @@ template File.join("/etc/logrotate.d", node['mongodb']['nodename']) do
 end
 
 template File.join(node['mongodb']['etc_dir'], "#{node['mongodb']['nodename']}.conf") do
-  source "mongodb.conf.erb"
+  source "mongos.conf.erb"
   owner "mongodb"
   group "mongodb"
   mode 00600
   variables(
-                 :nodename => node['mongodb']['nodename'],
-                 :data_dir => node['mongodb']['data_dir'],
-                  :log_dir => node['mongodb']['log_dir'],
-                     :port => node['mongodb']['port'],
-              :enable_rest => node['mongodb']['enable_jsonp'],
-             :enable_jsonp => node['mongodb']['enable_jsonp'],
-          :enable_shardsvr => node['mongodb']['enable_shardsvr'],
-         :enable_nojournal => node['mongodb']['enable_nojournal'],
-    :enable_directoryperdb => node['mongodb']['enable_directoryperdb']
+    :nodename => node['mongodb']['nodename'],
+    :data_dir => node['mongodb']['data_dir'],
+     :log_dir => node['mongodb']['log_dir'],
+        :port => node['mongodb']['port'],
+    :configdb => node['mongodb']['configdb']
   )
   notifies :restart, "service[#{node['mongodb']['nodename']}]"
 end
