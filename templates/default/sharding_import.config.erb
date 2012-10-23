@@ -1,7 +1,7 @@
 urls = new Array();
 
 <% @shardurls.map do |shardurl| %>
-urls.push("<%= shardurl %>>")
+urls.push("<%= shardurl %>")
 <% end %>
 
 urls.forEach(function(url) {
