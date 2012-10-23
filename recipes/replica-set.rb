@@ -28,7 +28,7 @@ template File.join("/etc/init", "#{mongonode['nodename']}.conf") do
   mode 00644
 end
 
-template File.join("/etc/logrotate.d", {mongonode['nodename']) do
+template File.join("/etc/logrotate.d", mongonode['nodename']) do
   source "logrotate_mongodb.erb"
   owner "root"
   group "root"
