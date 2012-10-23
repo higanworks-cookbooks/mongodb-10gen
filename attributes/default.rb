@@ -34,7 +34,7 @@ when "configsvr"
 
 when "router"
   default['mongodb']['nodename'] = "mongos"
-  default['mongodb']['configdb'] = "127.0.0.1:27019"
+  default['mongodb']['configdb'] = "#{node['ipaddress']}:27019"
 
 else # single server
   default['mongodb']['nodename'] = "mongodb_single"

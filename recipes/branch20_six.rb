@@ -80,7 +80,7 @@ end
 shardurls = []
 (1..6).each do |idx|
   port = node['mongodb']['baseport'] + 5000 * idx.to_i
-  shardurls.push "127.0.0.1:#{port.to_s}"
+  shardurls.push "#{node['ipaddress']}:#{port.to_s}"
 end
 
 template ::File.join(node['mongodb']['misc_dir'], "sharding_import.config") do
