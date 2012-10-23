@@ -47,7 +47,7 @@ template File.join(node['mongodb']['etc_dir'], "#{node['mongodb']['nodename']}.c
                  :nodename => node['mongodb']['nodename'],
                  :data_dir => node['mongodb']['data_dir'],
                   :log_dir => node['mongodb']['log_dir'],
-                     :port => node['mongodb']['port'],
+                     :port => node['mongodb']['configport'],
               :enable_rest => node['mongodb']['enable_jsonp'],
              :enable_jsonp => node['mongodb']['enable_jsonp'],
           :enable_shardsvr => node['mongodb']['enable_shardsvr'],

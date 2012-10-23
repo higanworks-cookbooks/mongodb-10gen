@@ -1,6 +1,7 @@
 include_recipe "mongodb-10gen::branch20"
 
-
+node.set['mongodb']['node_type'] = "single"
+node.load_attribute_by_short_filename("default","mongodb-10gen")
 
 directory File.join(node['mongodb']['data_dir'], node['mongodb']['nodename']) do
   owner "mongodb"

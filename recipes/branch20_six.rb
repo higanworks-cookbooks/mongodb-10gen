@@ -1,5 +1,8 @@
 include_recipe "mongodb-10gen::branch20"
 
+node.set['mongodb']['node_type'] = "single"
+node.load_attribute_by_short_filename("default","mongodb-10gen")
+
 
 (1..6).each do |idx|
 
@@ -47,7 +50,7 @@ include_recipe "mongodb-10gen::branch20"
                    :nodename => "mongodb#{idx}",
                    :data_dir => node['mongodb']['data_dir'],
                     :log_dir => node['mongodb']['log_dir'],
-                       :port => node['mongodb']['port'] + 5000 * idx.to_i,
+                       :port => node['mongodb']['baseport'] + 5000 * idx.to_i,
                 :enable_rest => node['mongodb']['enable_jsonp'],
                :enable_jsonp => node['mongodb']['enable_jsonp'],
             :enable_shardsvr => true,

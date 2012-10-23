@@ -12,6 +12,15 @@ default['mongodb']['data_dir'] = File.join(node['mongodb']['base_dir'], "db")
 default['mongodb']['misc_dir'] = File.join(node['mongodb']['base_dir'], "misc")
 
 
+## default ports, override it.
+default['mongodb']['baseport']   = 27017
+default['mongodb']['routerport'] = 27018
+default['mongodb']['configport'] = 27019
+
+
+## define defaut nodename.
+# This rule doesn't work well when server has more than one types.
+# To workaround, use load_attribute_by_short_filename method in your recipe.
 case node['mongodb']['node_type']
 when "replset"
   default['mongodb']['replSet_name'] = "repset"
@@ -21,17 +30,13 @@ when "replset"
 
 when "configsvr"
   default['mongodb']['nodename'] = "mongodb_config"
-  default['mongodb']['port'] = 27019
   default['mongodb']['enable_configsvr'] = true
 
 when "router"
   default['mongodb']['nodename'] = "mongos"
-  default['mongodb']['port'] = 27017
   default['mongodb']['configdb'] = "127.0.0.1:27019"
 
 else # single server
   default['mongodb']['nodename'] = "mongodb_single"
-  default['mongodb']['port'] = 27017
-
 end
 

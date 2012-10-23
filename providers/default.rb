@@ -14,10 +14,13 @@ action :create do
        enable_nojournal = @new_resource.options[:enable_nojournal] ||= mongonode['enable_nojournal']
   enable_directoryperdb = @new_resource.options[:enable_directoryperdb] ||= mongonode['enable_directoryperdb']
 
-  directory log_dir do
+  directory ::File.join(log_dir) do
+    puts self.inspect
+    recursive true
     owner "mongodb"
     group "mongodb"
     mode 00755
+    puts self.inspect
   end
 
   directory [data_dir, @new_resource.instance_name].join("/") do
