@@ -39,7 +39,7 @@ if node['chef_packages']['chef']['version'] < "10"
   end
 end
 
-package "mongodb-10gen" do
+package node['mongodb']['package'] do
   action :install
 end
 
