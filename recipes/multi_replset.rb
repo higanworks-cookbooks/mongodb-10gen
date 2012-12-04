@@ -49,7 +49,6 @@ include_recipe "mongodb-10gen::default"
     owner "mongodb"
     group "mongodb"
     mode 00600
-    Chef::Log.info("#{node['mongodb']['multinode_id'][idx]['nodename']}")
     variables({
       :nodename => node['mongodb']['multinode_id'][idx]['nodename'],
           :port => node['mongodb']['port_base'] + node['mongodb']['port_step'] * idx.to_i,
