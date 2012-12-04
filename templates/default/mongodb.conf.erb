@@ -3,20 +3,24 @@
 ####
 
 
-dbpath=<%= File.join(node['mongodb']['data_dir'], node['mongodb']['nodename']) %>
+dbpath=<%= File.join(node['mongodb']['data_dir'], @nodename) %>
 
-logpath=<%= File.join(node['mongodb']['log_dir'], "#{node['mongodb']['nodename']}.log") %>
+logpath=<%= File.join(node['mongodb']['log_dir'], "#{@nodename}.log") %>
 
 logappend=true
 
-port = <%= node['mongodb']['port'] %>
+port = <%= @port %>
+<% unless node['mongodb']['isreplica'] %>
+replSet = <%= @replSet %>
+<% end %>
+
 verbose = <%= node['mongodb']['log_verbose'] %>
 cpu = <%= node['mongodb']['log_cpu'] %>
 rest = <%= node['mongodb']['enable_rest'] %>
 jsonp = <%= node['mongodb']['enable_jsonp'] %>
 shardsvr = <%= node['mongodb']['enable_shardsvr'] %>
 configsvr = <%= node['mongodb']['enable_configsvr'] %>
-pidfilepath=/var/run/<%=node['mongodb']['nodename'] %>.pid
+pidfilepath=/var/run/<%= @nodename %>.pid
 oplogSize=<%= node['mongodb']['oplogSize'] %>
 nojournal = <%= node['mongodb']['enable_nojournal'] %> 
 directoryperdb = <%=node['mongodb']['enable_directoryperdb'] %> 

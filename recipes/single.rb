@@ -18,9 +18,9 @@ template File.join("/etc/init", "#{node['mongodb']['nodename']}.conf") do
   owner "root"
   group "root"
   mode 00644
-  variables(
-    :nodename => node['mongodb']['nodename'],
-  )
+  variables({
+    :nodename => node['mongodb']['nodename']
+  })
 end
 
 template File.join("/etc/logrotate.d", node['mongodb']['nodename']) do
@@ -28,9 +28,9 @@ template File.join("/etc/logrotate.d", node['mongodb']['nodename']) do
   owner "root"
   group "root"
   mode 00644
-  variables(
-    :nodename => node['mongodb']['nodename'],
-  )
+  variables({
+    :nodename => node['mongodb']['nodename']
+  })
 end
 
 template File.join(node['mongodb']['etc_dir'], "#{node['mongodb']['nodename']}.conf") do
@@ -38,9 +38,10 @@ template File.join(node['mongodb']['etc_dir'], "#{node['mongodb']['nodename']}.c
   owner "mongodb"
   group "mongodb"
   mode 00600
-  variables(
-                 :nodename => node['mongodb']['nodename'],
-  )
+  variables({
+    :nodename => node['mongodb']['nodename'],
+        :port => node['mongodb']['port']
+  })
   notifies :restart, "service[#{node['mongodb']['nodename']}]"
 end
 

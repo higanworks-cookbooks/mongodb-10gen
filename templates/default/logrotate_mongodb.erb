@@ -1,4 +1,4 @@
-<%= @log_dir %>/<%= @nodename %>.log
+<%= node['mongodb']['log_dir'] %>/<%= @nodename %>.log
 {
         rotate 4
         weekly
