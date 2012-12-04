@@ -1,9 +1,18 @@
-default['mongodb']['enable_shardsvr'] = false
+## choose version as package name
+# mongodb18-10gen, mongodb20-10gen,mongodb-10gen
+default['mongodb']['nodename'] = "mongodb"
+default['mongodb']['package'] = "mongodb-10gen"
+default['mongodb']['port']   = 27017
+default['mongodb']['log_verbose']   = false
+default['mongodb']['log_cpu']   = true
+
+default['mongodb']['enable_shardsvr'] = true
 default['mongodb']['enable_configsvr'] = false
 default['mongodb']['enable_rest'] = true
 default['mongodb']['enable_jsonp'] = false
 default['mongodb']['enable_nojournal'] = false
 default['mongodb']['enable_directoryperdb'] = true
+default['mongodb']['oplogSize'] = 5120
 
 default['mongodb']['base_dir'] = '/data/mongodb'
 default['mongodb']['etc_dir'] = File.join(node['mongodb']['base_dir'], "etc")
@@ -12,31 +21,39 @@ default['mongodb']['data_dir'] = File.join(node['mongodb']['base_dir'], "db")
 default['mongodb']['misc_dir'] = File.join(node['mongodb']['base_dir'], "misc")
 
 
-## default ports, override it.
-default['mongodb']['baseport']   = 27017
-default['mongodb']['routerport'] = 27018
-default['mongodb']['configport'] = 27019
+## for replica sets
+
+default['mongodb']['isreplica'] = false 
+default['mongodb']['replSet']   = "replica" ## dummy
+
+### multi instance option
+
+default['mongodb']['rep_prefix']   = "rep" 
+default['mongodb']['rep_fromid']   = 1   # rep01,rep02...
+default['mongodb']['multi_prefix']   = "mongodb"
+default['mongodb']['multi_num']     = 3
+default['mongodb']['port_base']   = 27017
+default['mongodb']['port_step']   = 2000
+
+## for config node
+
+default['mongodb']['config']['nodename'] = "mongodb_config"
+default['mongodb']['config']['port'] = 27019
+default['mongodb']['config']['log_verbose']   = false
+default['mongodb']['config']['log_cpu']   = true
+
+default['mongodb']['config']['enable_shardsvr'] = false
+default['mongodb']['config']['enable_configsvr'] = true
+default['mongodb']['config']['enable_rest'] = true
+default['mongodb']['config']['enable_jsonp'] = false
+default['mongodb']['config']['enable_nojournal'] = false
+default['mongodb']['config']['enable_directoryperdb'] = true
+default['mongodb']['config']['oplogSize'] = 5120
 
 
-## define defaut nodename.
-# This rule doesn't work well when server has more than one types.
-# To workaround, use load_attribute_by_short_filename method in your recipe.
-case node['mongodb']['node_type']
-when "replset"
-  default['mongodb']['replSet_name'] = "repset"
-  default['mongodb']['nodename'] = "mongodb-#{node['mongodb']['replSet_name']}"
-  default['mongodb']['enable_shardsvr'] = true
-  default['mongodb']['enable_nojournal'] = true
-
-when "configsvr"
-  default['mongodb']['nodename'] = "mongodb_config"
-  default['mongodb']['enable_configsvr'] = true
-
-when "router"
-  default['mongodb']['nodename'] = "mongos"
-  default['mongodb']['configdb'] = "#{node['ipaddress']}:27019"
-
-else # single server
-  default['mongodb']['nodename'] = "mongodb_single"
-end
+## for mongos
+default['mongodb']['router']['nodename'] = "mongos"
+default['mongodb']['router']['port'] = 27018
+default['mongodb']['router']['configdb'] = ["localhost:27019"]
+default['mongodb']['router']['log_verbose']   = false
 

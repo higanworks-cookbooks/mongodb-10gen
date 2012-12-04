@@ -3,7 +3,7 @@ Description
 
 [![Build Status](https://secure.travis-ci.org/higanworks-cookbooks/mongodb-10gen.png)](http://travis-ci.org/higanworks-cookbooks/mongodb-10gen)
 
-Add apt repository and install mongodb-10gen.
+Add apt repository and install mongodb-10gen. 
 
 ### Tested on
 
@@ -18,6 +18,18 @@ Requirements
 Attributes
 ==========
 
+### group ['mongodb']
+
+update your mongodb.conf values
+
+### group ['mongodb']['config']
+
+update your mongodb_config.conf values
+
+### group ['mongodb']['router']
+
+update your mongos.conf values
+
 Usage
 =====
 
@@ -31,11 +43,14 @@ Usage
 #### single
 
 - setup mongodb single node.
-- node-id is written at `attribute[nodemane]`, you can override and create many mongodb instances.
 
-#### replica-sets
+#### config
 
-will here soon..
+- setup mongodb config node.
+
+#### router
+
+- setup mongodb router(mongos) node.
 
 Additions
 =====
@@ -50,3 +65,10 @@ Usage: `cp {mongo_dir}misc/mongorc.js ~/.mongorc.js`
 MongoDB shell version: 2.0.4
 connecting to: test
 s01:PRIMARY:[2.0.4] > </code></pre>
+
+
+Author
+====
+
+
+Author:: HiganWorks LLC (<sawanoboriyu@higanworks.com>)

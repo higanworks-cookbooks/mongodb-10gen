@@ -1,12 +1,13 @@
 # mongo_router.conf
 # maintenance: sawanoboriyu
 
-configdb=<%= @configdb %>
+configdb=<%= node['mongodb']['router']['configdb'].join(",") %>
 port = <%= @port %>
 
 #where to log
-logpath=<%= @log_dir %>/<%= @nodename %>.log
+logpath=<%= node['mongodb']['log_dir'] %>/<%= @nodename %>.log
 logappend=true
+verbose = <%= node['mongodb']['router']['log_verbose'] %>
 
 pidfilepath=/var/run/<%= @nodename %>.pid
 
