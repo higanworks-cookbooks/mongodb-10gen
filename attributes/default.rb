@@ -1,4 +1,4 @@
-## choose versiob as package name
+## choose version as package name
 # mongodb18-10gen, mongodb20-10gen,mongodb-10gen
 default['mongodb']['nodename'] = "mongodb"
 default['mongodb']['package'] = "mongodb-10gen"
