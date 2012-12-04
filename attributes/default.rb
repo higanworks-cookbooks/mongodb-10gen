@@ -29,8 +29,9 @@ default['mongodb']['replSet']   = "replica" ## dummy
 ### multi instance option
 
 default['mongodb']['rep_prefix']   = "rep" 
+default['mongodb']['rep_fromid']   = 1   # rep01,rep02...
 default['mongodb']['multi_prefix']   = "mongodb"
-default['mongodb']['multi_num']   = 3
+default['mongodb']['multi_num']     = 3
 default['mongodb']['port_base']   = 27017
 default['mongodb']['port_step']   = 2000
 

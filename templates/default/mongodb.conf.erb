@@ -10,7 +10,7 @@ logpath=<%= File.join(node['mongodb']['log_dir'], "#{@nodename}.log") %>
 logappend=true
 
 port = <%= @port %>
-<% unless node['mongodb']['isreplica'] %>
+<% if node['mongodb']['isreplica'] %>
 replSet = <%= @replSet %>
 <% end %>
 

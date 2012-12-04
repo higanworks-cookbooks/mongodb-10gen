@@ -5,11 +5,14 @@ include_recipe "mongodb-10gen::default"
 
 
 (1..node['mongodb']['multi_num']).each_with_index do |id, idx|
-  node.set['mongodb']['multinode_id']['idx'] = [node['mongodb']['multi_prefix'], id.to_s].join
+  node.set['mongodb']['multinode_id'][idx] = {
+    "nodename" => [node['mongodb']['multi_prefix'], id.to_s].join,
+    "replname" => [node['mongodb']['rep_prefix'], format("%02d", node['mongodb']['rep_fromid'] + idx) ].join
+  }
+  Chef::Log.info("Mongodb node #{node['mongodb']['multinode_id'][idx]['nodename']}")
+  Chef::Log.info("Mongodb replset #{node['mongodb']['multinode_id'][idx]['replname']}")
 
-  Chef::Log.info("Mongodb node #{node['mongodb']['multinode_id']['idx']}")
-
-  directory ::File.join(node['mongodb']['data_dir'], node['mongodb']['multinode_id']['idx']) do
+  directory ::File.join(node['mongodb']['data_dir'], node['mongodb']['multinode_id'][idx]['nodename']) do
     owner "mongodb"
     group "mongodb"
     mode 00700
@@ -21,41 +24,42 @@ include_recipe "mongodb-10gen::default"
     mode 00755
   end
 
-  template ::File.join("/etc/init", "#{node['mongodb']['multinode_id']['idx']}.conf") do
+  template ::File.join("/etc/init", "#{node['mongodb']['multinode_id'][idx]['nodename']}.conf") do
     source "init_mongodb.erb"
     owner "root"
     group "root"
     mode 00644
     variables({
-      :nodename => node['mongodb']['multinode_id']['idx']
+      :nodename => node['mongodb']['multinode_id'][idx]['nodename']
     })
   end
 
-  template ::File.join("/etc/logrotate.d", node['mongodb']['multinode_id']['idx']) do
+  template ::File.join("/etc/logrotate.d", node['mongodb']['multinode_id'][idx]['nodename']) do
     source "logrotate_mongodb.erb"
     owner "root"
     group "root"
     mode 00644
     variables({
-      :nodename => node['mongodb']['multinode_id']['idx']
+      :nodename => node['mongodb']['multinode_id'][idx]['nodename']
     })
   end
 
-  template ::File.join(node['mongodb']['etc_dir'], "#{node['mongodb']['multinode_id']['idx']}.conf") do
+  template ::File.join(node['mongodb']['etc_dir'], "#{node['mongodb']['multinode_id'][idx]['nodename']}.conf") do
     source "mongodb.conf.erb"
     owner "mongodb"
     group "mongodb"
     mode 00600
+    Chef::Log.info("#{node['mongodb']['multinode_id'][idx]['nodename']}")
     variables({
-      :nodename => node['mongodb']['multinode_id']['idx'],
+      :nodename => node['mongodb']['multinode_id'][idx]['nodename'],
           :port => node['mongodb']['port_base'] + node['mongodb']['port_step'] * idx.to_i,
+          :replSet => node['mongodb']['multinode_id'][idx]['replname']
     })
-    Chef::Log.info "service[#{node['mongodb']['multinode_id']['idx']}]"
-    notifies :restart, "service[#{node['mongodb']['multinode_id']['idx']}]"
+    notifies :restart, "service[#{node['mongodb']['multinode_id'][idx]['nodename']}]"
   end
 
 
-  service node['mongodb']['multinode_id']['idx'] do
+  service node['mongodb']['multinode_id'][idx]['nodename'] do
     case node['platform']
     when "ubuntu"
       if node['platform_version'].to_f >= 9.10
