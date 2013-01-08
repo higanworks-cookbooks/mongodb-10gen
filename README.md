@@ -5,6 +5,11 @@ Description
 
 Add apt repository and install mongodb-10gen. 
 
+## Platform
+
+* ubuntu
+* debian
+
 ### Tested on
 
 * ubuntu 12.04(precise)
