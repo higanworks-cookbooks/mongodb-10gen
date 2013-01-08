@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of mongodb-10gen.
 
+## 0.1.6:
+
+*  Issue #1 replSet is blank in the mongo.conf file.
+
 ## 0.1.5:
 
 * support debian.

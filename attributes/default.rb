@@ -23,12 +23,12 @@ default['mongodb']['misc_dir'] = File.join(node['mongodb']['base_dir'], "misc")
 
 ## for replica sets
 
-default['mongodb']['isreplica'] = false 
+default['mongodb']['isreplica'] = false
 default['mongodb']['replSet']   = "replica" ## dummy
 
 ### multi instance option
 
-default['mongodb']['rep_prefix']   = "rep" 
+default['mongodb']['rep_prefix']   = "rep"
 default['mongodb']['rep_fromid']   = 1   # rep01,rep02...
 default['mongodb']['multi_prefix']   = "mongodb"
 default['mongodb']['multi_num']     = 3
