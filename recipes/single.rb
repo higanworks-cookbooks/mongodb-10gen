@@ -40,7 +40,8 @@ template File.join(node['mongodb']['etc_dir'], "#{node['mongodb']['nodename']}.c
   mode 00600
   variables({
     :nodename => node['mongodb']['nodename'],
-        :port => node['mongodb']['port']
+        :port => node['mongodb']['port'],
+        :replSet => node['mongodb']['replSet']
   })
   notifies :restart, "service[#{node['mongodb']['nodename']}]"
 end
