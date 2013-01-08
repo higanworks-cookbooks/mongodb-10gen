@@ -1,3 +1,4 @@
+name             "mongodb-10gen"
 maintainer       "Higanworks LLC."
 maintainer_email "sawanoboriyu@higanworks.com"
 license          "MIT"

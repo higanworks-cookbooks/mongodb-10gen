@@ -57,7 +57,8 @@ if node['chef_packages']['chef']['version'] < "10"
    
   file "/etc/apt/sources.list.d/mongodb-10gen.update-once.list" do
     action :create_if_missing
-    notifies :run, resources(:execute => "apt-get-update"), :immediately
+    # notifies :run, resources(:execute => "apt-get-update"), :immediately
+    notifies :run, "execute[apt-get-update]", :immediately
   end
 end
 
