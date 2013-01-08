@@ -27,7 +27,12 @@
 include_recipe "apt"
 
 apt_repository "mongodb-10gen" do
-  uri "http://downloads-distro.mongodb.org/repo/ubuntu-upstart"
+  case node["platform"]
+  when "ubuntu"
+    uri "http://downloads-distro.mongodb.org/repo/ubuntu-upstart"
+  when "debian"
+    uri "http://downloads-distro.mongodb.org/repo/debian-sysvinit"
+  end
   distribution "dist"
   components ["10gen"]
   keyserver "keyserver.ubuntu.com"
