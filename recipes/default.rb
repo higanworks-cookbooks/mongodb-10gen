@@ -23,7 +23,6 @@
 ## OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 ## WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 include_recipe "apt"
 
 apt_repository "mongodb-10gen" do
@@ -37,7 +36,10 @@ apt_repository "mongodb-10gen" do
   components ["10gen"]
   keyserver "keyserver.ubuntu.com"
   key "7F0CEB10"
+  action :add
+  notifies :run, "execute[apt-get update]", :immediately  # recipe[apt::default]
 end
+
 
 file "/etc/default/mongodb" do
   action :create_if_missing
@@ -57,8 +59,7 @@ if node['chef_packages']['chef']['version'] < "10"
    
   file "/etc/apt/sources.list.d/mongodb-10gen.update-once.list" do
     action :create_if_missing
-    # notifies :run, resources(:execute => "apt-get-update"), :immediately
-    notifies :run, "execute[apt-get-update]", :immediately
+    notifies :run, "execute[apt-get update]", :immediately
   end
 end
 
