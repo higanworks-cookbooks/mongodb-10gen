@@ -2,6 +2,11 @@
 
 This file is used to list changes made in each version of mongodb-10gen.
 
+## 0.1.7
+
+* apt update immediately when add repository.
+* add Kitchenfile for test-kitchen
+
 ## 0.1.6
 
 *  #1 replSet is blank in the mongo.conf file. HT: @rbrcurtis
