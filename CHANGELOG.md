@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of mongodb-10gen.
 
+## 0.1.8
+
+* add dummy file due to remote_directory compatibility. HT: @Soulou , @teyrow
+
 ## 0.1.7
 
 * apt update immediately when add repository.
