@@ -12,7 +12,7 @@ default['mongodb']['enable_rest'] = true
 default['mongodb']['enable_jsonp'] = false
 default['mongodb']['enable_nojournal'] = false
 default['mongodb']['enable_directoryperdb'] = true
-default['mongodb']['oplogSize'] = 5120
+default['mongodb']['oplogSize'] = node['kernel']['machine'].index("x86_64") ? 5120 : 1000
 
 default['mongodb']['base_dir'] = '/data/mongodb'
 default['mongodb']['etc_dir'] = File.join(node['mongodb']['base_dir'], "etc")
@@ -48,7 +48,7 @@ default['mongodb']['config']['enable_rest'] = true
 default['mongodb']['config']['enable_jsonp'] = false
 default['mongodb']['config']['enable_nojournal'] = false
 default['mongodb']['config']['enable_directoryperdb'] = true
-default['mongodb']['config']['oplogSize'] = 5120
+default['mongodb']['config']['oplogSize'] = node['kernel']['machine'].index("x86_64") ? 5120 : 1000
 
 
 ## for mongos
