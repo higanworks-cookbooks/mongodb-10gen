@@ -12,6 +12,6 @@ stop on runlevel [06]
 script
   ENABLE_MONGODB="yes"
   PIDFILE=/var/run/<%= @nodename %>.pid
-  if [ "x$ENABLE_MONGODB" = "xyes" ]; then exec start-stop-daemon --start --quiet --chuid mongodb -m --pidfile $PIDFILE --exec  /usr/bin/mongod -- --config /data/mongodb/etc/<%= @nodename %>.conf; fi
+  if [ "x$ENABLE_MONGODB" = "xyes" ]; then exec start-stop-daemon --start --quiet --chuid mongodb -m --pidfile $PIDFILE --exec  /usr/bin/mongod -- --config <%= node['mongodb']['etc_dir'] %>/<%= @nodename %>.conf; fi
 end script
 
