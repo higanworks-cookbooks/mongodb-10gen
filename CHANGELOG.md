@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of mongodb-10gen.
 
+## 0.1.9
+
+* fix etc dir in init_mongodb.erb template HT: @alovak
+
 ## 0.1.8
 
 * add dummy file due to remote_directory compatibility. HT: @Soulou , @teyrow
@@ -19,7 +23,7 @@ This file is used to list changes made in each version of mongodb-10gen.
 
 *  #2 support debian. HT: @cjblomqvist
 
-- - - 
+- - -
 Check the [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) for help with Markdown.
 
 The [Github Flavored Markdown page](http://github.github.com/github-flavored-markdown/) describes the differences between markdown on github and standard markdown.
