@@ -72,8 +72,10 @@ directory "/data" do
   owner "root"
   mode 00755
 end
- 
-remote_directory "/data/mongodb" do
+
+log "create mongodb base_dir #{node['mongodb']['base_dir']}" 
+
+remote_directory node['mongodb']['base_dir'] do
   source "mongodb"
   files_group "mongodb"
   files_owner "mongodb"
@@ -81,5 +83,6 @@ remote_directory "/data/mongodb" do
   owner "mongodb"
   group "mongodb"
   mode 00755
+  recursive true
 end
 
