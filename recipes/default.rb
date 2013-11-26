@@ -56,7 +56,7 @@ if node['chef_packages']['chef']['version'] < "10"
     ignore_failure true
     action :run
   end
-   
+
   file "/etc/apt/sources.list.d/mongodb-10gen.update-once.list" do
     action :create_if_missing
     notifies :run, "execute[apt-get update]", :immediately
@@ -73,8 +73,6 @@ directory "/data" do
   mode 00755
 end
 
-log "create mongodb base_dir #{node['mongodb']['base_dir']}" 
-
 remote_directory node['mongodb']['base_dir'] do
   source "mongodb"
   files_group "mongodb"
@@ -86,3 +84,4 @@ remote_directory node['mongodb']['base_dir'] do
   recursive true
 end
 
+log "created mongodb base_dir #{node['mongodb']['base_dir']}" if resources("remote_directory[#{node['mongodb']['base_dir']}]").updated?

@@ -1,3 +1,0 @@
-cookbook "mongodb-10gen" do
-  configuration "default"
-end

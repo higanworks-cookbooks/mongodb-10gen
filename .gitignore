@@ -2,3 +2,5 @@
 
 *.swp
 /test/kitchen/.kitchen
+.kitchen/
+.kitchen.local.yml

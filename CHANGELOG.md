@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of mongodb-10gen.
 
+## 0.1.10
+
+* fix: #6 Error when using a base_dir different of /data/mongodb/ @mgrenonville
+
 ## 0.1.9
 
 * fix etc dir in init_mongodb.erb template HT: @alovak
