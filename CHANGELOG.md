@@ -2,6 +2,11 @@
 
 This file is used to list changes made in each version of mongodb-10gen.
 
+## 0.2.0
+
+* apt cookbook v2.5.0 doesn't provide apt-get update every run.
+* apt cookbook v2.5.0 does an immediate apt-get update after adding a repository
+
 ## 0.1.10
 
 * fix: #6 Error when using a base_dir different of /data/mongodb/ @mgrenonville
