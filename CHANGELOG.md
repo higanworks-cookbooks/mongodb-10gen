@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of mongodb-10gen.
 
+## 0.3.0
+
+* Change default package name to mongodb-org
+
 ## 0.2.1
 
 * remove self depends.

@@ -1,7 +1,7 @@
 ## choose version as package name
 # mongodb18-10gen, mongodb20-10gen,mongodb-10gen
 default['mongodb']['nodename'] = "mongodb"
-default['mongodb']['package'] = "mongodb-10gen"
+default['mongodb']['package'] = "mongodb-org"
 default['mongodb']['port']   = 27017
 default['mongodb']['log_verbose']   = false
 default['mongodb']['log_cpu']   = true
