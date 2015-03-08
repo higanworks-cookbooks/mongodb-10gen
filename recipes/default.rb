@@ -39,11 +39,12 @@ apt_repository "mongodb-10gen" do
   action :add
 end
 
-
-file "/etc/default/mongodb" do
-  action :create_if_missing
-  owner "root"
-  content "ENABLE_MONGODB=no"
+%w[mongod mongodb].map do |mongo_name|
+  file "/etc/default/#{mongo_name}" do
+    action :create_if_missing
+    owner "root"
+    content "ENABLE_MONGODB=no"
+  end
 end
 
 # cookbook apt has bug ?
@@ -62,13 +63,29 @@ if node['chef_packages']['chef']['version'] < "10"
   end
 end
 
+package 'numactl' do
+  action :install
+  ignore_failure true
+end
+
 package node['mongodb']['package'] do
   action :install
+end
+
+## Disable default mongod instance.
+service 'mongod' do
+  action [:stop, :disable]
 end
 
 directory "/data" do
   group "root"
   owner "root"
+  mode 00755
+end
+
+directory "/var/run/mongodb" do
+  group "mongodb"
+  owner "mongodb"
   mode 00755
 end
 

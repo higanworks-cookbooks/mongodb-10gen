@@ -2,9 +2,15 @@
 
 This file is used to list changes made in each version of mongodb-10gen.
 
+## 0.4.0
+
+* Change config option from verbose=true to v=true for mongodb 2.6.x.
+* Change pidpath /var/run/* to /var/run/mongodb/*
+* Install numactl.
+
 ## 0.3.0
 
-* Change default package name to mongodb-org
+* Change default package name to mongodb-org.
 
 ## 0.2.1
 
