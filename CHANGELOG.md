@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of mongodb-10gen.
 
+## 0.4.1
+
+* fix tempate for mongos.
+
 ## 0.4.0
 
 * Change config option from verbose=true to v=true for mongodb 2.6.x.

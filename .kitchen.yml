@@ -14,6 +14,12 @@ suites:
 - name: default
   run_list: ["recipe[simplelog_handler]","recipe[mongodb-10gen]"]
   attributes: {}
+- name: router
+  run_list:
+    - "recipe[simplelog_handler]"
+    - "recipe[mongodb-10gen::config]"
+    - "recipe[mongodb-10gen::router]"
+  attributes: {}
 - name: default_basedir
   run_list: ["recipe[simplelog_handler]","recipe[mongodb-10gen]"]
   attributes:

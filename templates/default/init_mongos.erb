@@ -1,17 +1,48 @@
-limit nofile 20000 20000
+# Ubuntu upstart file at /etc/init/mongod.conf
+
+# Recommended ulimit values for mongod or mongos
+# See http://docs.mongodb.org/manual/reference/ulimit/#recommended-settings
+#
+limit fsize unlimited unlimited
+limit cpu unlimited unlimited
+limit as unlimited unlimited
+limit nofile 64000 64000
+limit rss unlimited unlimited
+limit nproc 32000 32000
 
 kill timeout 300 # wait 300s between SIGTERM and SIGKILL.
 
 pre-start script
-#   chown mongodb:mongodb <%= @data_dir %>/<%= @nodename %> <%= @log_dir %>
+    mkdir -p <%= node['mongodb']['data_dir'] %>
+    mkdir -p <%= node['mongodb']['log_dir'] %>
 end script
 
 start on runlevel [2345]
 stop on runlevel [06]
 
 script
-  ENABLE_MONGODB="yes"
-  PIDFILE=/var/run/mongodb/<%= @nodename %>.pid
-  if [ "x$ENABLE_MONGODB" = "xyes" ]; then exec start-stop-daemon --start --quiet --chuid mongodb -m --pidfile $PIDFILE --exec  /usr/bin/mongos -- --config /data/mongodb/etc/<%= @nodename %>.conf; fi
+  ENABLE_MONGOD="yes"
+  CONF=<%= node['mongodb']['etc_dir'] %>/<%= @nodename %>.conf
+  DAEMON=/usr/bin/mongos
+  DAEMONUSER=${DAEMONUSER:-mongodb}
+
+  if [ -f /etc/default/mongos ]; then . /etc/default/mongos; fi
+
+  # Handle NUMA access to CPUs (SERVER-3574)
+  # This verifies the existence of numactl as well as testing that the command works
+  NUMACTL_ARGS="--interleave=all"
+  if which numactl >/dev/null 2>/dev/null && numactl $NUMACTL_ARGS ls / >/dev/null 2>/dev/null
+  then
+    NUMACTL="$(which numactl) -- $NUMACTL_ARGS"
+    DAEMON_OPTS=${DAEMON_OPTS:-"--config $CONF"}
+  else
+    NUMACTL=""
+    DAEMON_OPTS="-- "${DAEMON_OPTS:-"--config $CONF"}
+  fi
+
+  if [ "x$ENABLE_MONGOD" = "xyes" ]
+  then
+    exec start-stop-daemon --start --chuid $DAEMONUSER --exec $NUMACTL $DAEMON $DAEMON_OPTS
+  fi
 end script
 
